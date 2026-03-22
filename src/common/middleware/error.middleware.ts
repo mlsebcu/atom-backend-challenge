@@ -17,7 +17,8 @@ export function errorMiddleware(
   res: Response,
   _next: NextFunction,
 ): void {
-  
+  console.error(`[Error] ${err.message}`);
+
   if (err instanceof AppError) {
     const response: ApiError = {
       success: false,

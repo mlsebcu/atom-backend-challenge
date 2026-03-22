@@ -2,6 +2,9 @@ import { Router } from 'express';
 import { UserRepository } from '../modules/user/user.repository';
 import { UserService } from '../modules/user/user.service';
 import { UserController } from '../modules/user/user.controller';
+import { TaskController } from '../modules/task/task.controller';
+import { TaskRepository } from '../modules/task/task.repository';
+import { TaskService } from '../modules/task/task.service';
 
 const router = Router();
 
@@ -10,8 +13,18 @@ const userRepository = new UserRepository();
 const userService = new UserService(userRepository);
 const userController = new UserController(userService);
 
+const taskRepository = new TaskRepository();
+const taskService = new TaskService(taskRepository);
+const taskController = new TaskController(taskService);
+
 // Rutas user
 router.get('/users/:email', userController.findByEmail);
 router.post('/users', userController.createUser);
+
+// Rutas task
+router.get('/tasks/user/:userId', taskController.getTasksByUser);
+router.post('/tasks', taskController.createTask);
+router.put('/tasks/:taskId', taskController.updateTask);
+router.delete('/tasks/:taskId', taskController.deleteTask);
 
 export default router;
