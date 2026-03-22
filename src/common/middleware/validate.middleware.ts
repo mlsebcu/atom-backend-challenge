@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { validationResult } from "express-validator";
 import { ApiError } from "../types/response.types";
+import { Messages } from "../constants/messages";
 
 export function validateRequest(
   req: Request,
@@ -12,7 +13,7 @@ export function validateRequest(
   if (!errors.isEmpty()) {
     const response: ApiError = {
       success: false,
-      message: "Falla en la validación",
+      message: Messages.VALIDATION_FAILED,
       errors: errors.array().map((e) => e.msg as string),
     };
     res.status(400).json(response);

@@ -1,7 +1,7 @@
-import * as admin from 'firebase-admin';
-import { ServiceAccount } from 'firebase-admin';
+import * as admin from "firebase-admin";
+import { ServiceAccount } from "firebase-admin";
 
-const serviceAccount = require('../../serviceAccount.json') as ServiceAccount;
+const serviceAccount = require("../../serviceAccount.json") as ServiceAccount;
 
 class FirebaseApp {
   private static instance: admin.app.App | null = null;

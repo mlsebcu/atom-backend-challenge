@@ -9,7 +9,6 @@ export const corsOptions: CorsOptions = {
       .split(",")
       .map((o) => o.trim());
 
-    // Permite requests sin origin (Postman, curl, etc.) o si el origin está en la lista de permitidos
     if (!origin || allowed.includes(origin)) {
       callback(null, true);
     } else {

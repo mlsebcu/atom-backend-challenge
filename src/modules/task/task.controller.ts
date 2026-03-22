@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { TaskService } from "./task.service";
 import { ApiResponse } from "../../common/types/response.types";
 import { Task, CreateTaskDto, UpdateTaskDto } from "./task.model";
+import { Messages } from "../../common/constants/messages";
 
 export class TaskController {
   constructor(private readonly taskService: TaskService) {}
@@ -34,7 +35,7 @@ export class TaskController {
       const response: ApiResponse<Task> = {
         success: true,
         data: task,
-        message: "Tarea creada exitosamente",
+        message: Messages.TASK.CREATED,
       };
       res.status(201).json(response);
     } catch (err) {
@@ -59,6 +60,13 @@ export class TaskController {
     }
   };
 
+  /**
+   * Maneja la eliminación de una tarea por su ID.
+   * Elimina la tarea utilizando el servicio y devuelve una respuesta de éxito.
+   * @param req 
+   * @param res 
+   * @param next 
+   */
   deleteTask = async (
     req: Request,
     res: Response,
@@ -70,7 +78,7 @@ export class TaskController {
 
       const response: ApiResponse = {
         success: true,
-        message: "Tarea eliminada exitosamente",
+        message: Messages.TASK.DELETED,
       };
       res.status(200).json(response);
     } catch (err) {

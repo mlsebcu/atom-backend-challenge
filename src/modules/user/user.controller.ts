@@ -1,7 +1,8 @@
-import { Request, Response, NextFunction } from 'express';
-import { UserService } from './user.service';
-import { ApiResponse } from '../../common/types/response.types';
-import { User } from './user.model';
+import { Request, Response, NextFunction } from "express";
+import { UserService } from "./user.service";
+import { ApiResponse } from "../../common/types/response.types";
+import { User } from "./user.model";
+import { Messages } from "../../common/constants/messages";
 
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -9,16 +10,16 @@ export class UserController {
   findByEmail = async (
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ): Promise<void> => {
     try {
-      const email = req.params['email'] as string;
+      const email = req.params["email"] as string;
       const user = await this.userService.findByEmail(email);
 
       if (!user) {
         res.status(404).json({
           success: false,
-          message: 'Usuario no encontrado',
+          message: Messages.USER.NOT_FOUND,
         });
         return;
       }
@@ -33,7 +34,7 @@ export class UserController {
   createUser = async (
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ): Promise<void> => {
     try {
       const { email } = req.body as { email: string };
@@ -42,7 +43,7 @@ export class UserController {
       const response: ApiResponse<User> = {
         success: true,
         data: user,
-        message: 'Usuario creado exitosamente',
+        message: Messages.USER.CREATED,
       };
       res.status(201).json(response);
     } catch (err) {

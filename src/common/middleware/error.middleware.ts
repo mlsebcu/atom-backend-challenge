@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { ApiError } from "../types/response.types";
+import { Messages } from "../constants/messages";
 
 export class AppError extends Error {
   constructor(
@@ -31,7 +32,7 @@ export function errorMiddleware(
   // Error genérico no controlado
   const response: ApiError = {
     success: false,
-    message: "Error interno del servidor",
+    message: Messages.INTERNAL_ERROR,
   };
   res.status(500).json(response);
 }
