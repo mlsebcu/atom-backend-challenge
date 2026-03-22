@@ -12,11 +12,6 @@ app.use(helmet());
 app.use(cors(corsOptions));
 app.use(express.json());
 
-app.use((req, _res, next) => {
-    console.log(`${req.method} ${req.path}`);
-    next();
-})
-
 // Rutas
 app.use('/api', router);
 
