@@ -1,7 +1,7 @@
-import * as admin from "firebase-admin";
-import * as dotenv from "dotenv";
+import * as admin from 'firebase-admin';
+import { ServiceAccount } from 'firebase-admin';
 
-dotenv.config();
+const serviceAccount = require('../../serviceAccount.json') as ServiceAccount;
 
 class FirebaseApp {
   private static instance: admin.app.App | null = null;
@@ -9,7 +9,7 @@ class FirebaseApp {
   static getInstance(): admin.app.App {
     if (!FirebaseApp.instance) {
       FirebaseApp.instance = admin.initializeApp({
-        credential: admin.credential.applicationDefault(),
+        credential: admin.credential.cert(serviceAccount),
       });
     }
     return FirebaseApp.instance;
