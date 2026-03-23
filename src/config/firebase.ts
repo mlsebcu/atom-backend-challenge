@@ -1,10 +1,7 @@
 import * as admin from "firebase-admin";
-import * as dotenv from "dotenv";
 import * as path from "path";
 import * as fs from "fs";
 import { ServiceAccount } from "firebase-admin";
-
-dotenv.config();
 
 class FirebaseApp {
   private static instance: admin.app.App | null = null;
@@ -12,9 +9,11 @@ class FirebaseApp {
   static getInstance(): admin.app.App {
     if (!FirebaseApp.instance) {
       const serviceAccountPath = process.env["SERVICE_ACCOUNT_PATH"];
+      const isCloudFunction =
+        process.env["FUNCTION_TARGET"] ?? process.env["K_SERVICE"];
 
-      // En local usa serviceAccount.json, en Cloud Functions usa ADC
-      if (serviceAccountPath) {
+      if (serviceAccountPath && !isCloudFunction) {
+        // Local — usa serviceAccount.json
         const resolvedPath = path.resolve(process.cwd(), serviceAccountPath);
         if (!fs.existsSync(resolvedPath)) {
           throw new Error(
